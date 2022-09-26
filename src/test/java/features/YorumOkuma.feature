@@ -6,7 +6,7 @@ Feature: Test 1
 
 
   Scenario: step1
-    * Kullanici "cep telefonu" icin arama islemi yapar
+    * Kullanici "samsung galaxy z flip 3" icin arama islemi yapar
     * Kullanici arama sonucunda gelen urun listesinden urun secer ve urun detay sayfasina gider
     * Kullanici secilen urun icin urun detayda "Yorumlar" tabina gider
     * Kullanici gelen yorumlar icerisinde "ilk" yorumun "Evet" butonuna basar

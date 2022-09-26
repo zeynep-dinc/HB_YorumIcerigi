@@ -40,6 +40,8 @@ public class YorumOkumaStepDefs {
     public void kullanici_gelen_yorumlar_icerisinde_ilk_yorumun_evet_butonuna_basar(String indexNo,String butonName) {
         System.out.println("4");
         System.out.println("İlk yorum:\n-"+hbElements.firstCommentTextElement.getText());
+        hbElements.waitFor(5);
+        hbElements.pressToKeyboard(Keys.PAGE_DOWN);
         hbElements.elementToClickable(hbElements.firstLikeButton);
     }
     @Given("Kullanici {string} yazisini gorur")
