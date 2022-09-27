@@ -24,27 +24,27 @@ public class TemelIslemler implements ITemelKomutlar {
 
     @Override
     public void elementToClickable(WebElement element) {
-        try {
+     //   try {
             wait.until(elementToBeClickable(element));
             element.click();
             System.out.println("The " + element + " is clicked!!");
             log.info("The " + element + " is clicked!!");
-        } catch (TimeoutException timeoutException) {
-            System.out.println("The " + element + " is timeout for 10 seconds.");
-            timeoutException.getMessage();
-            log.error("The " + element + " is timeout for 10 seconds.");
-        } catch (NoSuchElementException noSuchElementException) {
-            System.out.println("The " + element + " isn't such element.");
-            noSuchElementException.getMessage();
-            log.error("The " + element + " isn't such element.");
-        } catch (ElementClickInterceptedException elementClickInterceptedException) {
-            System.out.println("The " + element + " isn't clickable!");
-            elementClickInterceptedException.getMessage();
-            log.error("The " + element + " isn't clickable!");
-        } catch (Exception exception) {
-            exception.getMessage();
-            log.error("There is an exception:\n" + exception.getMessage());
-        }
+//        } catch (TimeoutException timeoutException) {
+//            System.out.println("The " + element + " is timeout for 10 seconds.");
+//            timeoutException.getMessage();
+//            log.error("The " + element + " is timeout for 10 seconds.");
+//        } catch (NoSuchElementException noSuchElementException) {
+//            System.out.println("The " + element + " isn't such element.");
+//            noSuchElementException.getMessage();
+//            log.error("The " + element + " isn't such element.");
+//        } catch (ElementClickInterceptedException elementClickInterceptedException) {
+//            System.out.println("The " + element + " isn't clickable!");
+//            elementClickInterceptedException.getMessage();
+//            log.error("The " + element + " isn't clickable!");
+//        } catch (Exception exception) {
+//            exception.getMessage();
+//            log.error("There is an exception:\n" + exception.getMessage());
+//        }
     }
 
     @Override
@@ -157,6 +157,17 @@ public class TemelIslemler implements ITemelKomutlar {
         }
         catch (Exception exception){
             exception.getMessage();
+        }
+    }
+
+
+    public void isDisplay(String text){
+        WebElement element=driver.findElement(By.xpath("(//*[text(),'"+text+"'])[1]"));
+        try {
+            Assert.assertTrue(element.isDisplayed());
+        }
+        catch (NoSuchElementException noSuchElementException){
+            noSuchElementException.getMessage();
         }
     }
 }

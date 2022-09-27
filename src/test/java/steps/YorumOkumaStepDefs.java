@@ -3,50 +3,83 @@ package steps;
 import base.SabitDegiskenlerEnumList;
 import hb.HB_Elements;
 import io.cucumber.java.en.Given;
-import org.mockito.Mockito;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import java.util.logging.Logger;
+
 public class YorumOkumaStepDefs {
 
-    HB_Elements hbElements=new HB_Elements();
+    Logger log = Logger.getLogger(YorumOkumaStepDefs.class.getName());
+
+    HB_Elements hbElements = new HB_Elements();
+
     @Given("Kullanicinin hepsiburada {string} oldugu teyit edilir")
     public void kullanicininHBdeOlduguTeyitEdilir(String sayfaAdi) {
         Assert.assertEquals(hbElements.driver.getTitle(), SabitDegiskenlerEnumList.valueOf(sayfaAdi).getBasliklar());
     }
-    @Given("Kullanici {string} icin arama islemi yapar")
-    public void kullanici_arama_islemi_yapar(String item) {
-        hbElements.sendKeys(hbElements.searchBox,item);
-        hbElements.pressToKeyboard(Keys.ENTER);
-        hbElements.waitForPageLoad(5);
-        System.out.println("1");
+
+    @Given("Arama cubuguna {string} yaz ve yaziyi dogrula")
+    public void aramaCubugunaYazVeYaziyiDogrula(String aramaUrunu) {
+        hbElements.sendKeys(hbElements.searchBox, aramaUrunu);
+        log.info("Arama çubuğuna " + aramaUrunu + " değeri yazıldı.");
+        hbElements.waitFor(2);
     }
-    @Given("Kullanici arama sonucunda gelen urun listesinden urun secer ve urun detay sayfasina gider")
-    public void kullanici_arama_sonucunda_gelen_urun_listesinden_urun_secer_ve_urun_detay_sayfasina_gider() {
+
+    @Given("{string} tusuna bas")
+    public void tusunaBas(String keys) {
+        hbElements.pressToKeyboard(Keys.valueOf(keys));
+        log.info(keys + " tuşuna basıldı");
+        hbElements.waitForPageLoad(5);
+    }
+
+    @Given("Arama cubugunda {string} degerinin aratildigini dogrula")
+    public void aramaCubugundaDegerininAratildiginiDogrula(String aramaUrunu) {
+        //UTF-8 nedeniyle kullanılmamıştır.
+        hbElements.waitForPageLoad(3);
+        Assert.assertEquals(hbElements.searchBox.getAttribute("value"), aramaUrunu);
+        log.info("Yazım doğrulandı");
+    }
+
+    @Given("Ilk urunun detayini ac")
+    public void ilkUrununDetayiniAc() {
         hbElements.waitFor(10);
         hbElements.elementToClickable(hbElements.firstItemTextElement);
         hbElements.waitForPageLoad(5);
+        log.info("İlk ürünün detayı açıldı");
+    }
+
+    @Given("Son tabi ac ilk tabi kapat")
+    public void sonTabiAcIlkTabiKapat() {
         hbElements.changeToLastTab();
         System.out.println("2");
+        log.info("tab değiştirildi");
     }
-    @Given("Kullanici secilen urun icin urun detayda {string} tabina gider")
-    public void kullanici_secilen_urun_icin_urun_detayda_tabina_gider(String tabName) {
+
+    @Given("Degerlendirme yazisina tikla")
+    public void degerlendirmeYazisinaTikla() {
         hbElements.waitForPageLoad(10);
         hbElements.elementToClickable(hbElements.commentTextElement);
-        System.out.println("3");
+        log.info("değerlendirme yazısı açıldı");
         hbElements.waitFor(5);
     }
-    @Given("Kullanici gelen yorumlar icerisinde {string} yorumun {string} butonuna basar")
-    public void kullanici_gelen_yorumlar_icerisinde_ilk_yorumun_evet_butonuna_basar(String indexNo,String butonName) {
-        System.out.println("4");
-        System.out.println("İlk yorum:\n-"+hbElements.firstCommentTextElement.getText());
-        hbElements.waitFor(5);
-        hbElements.pressToKeyboard(Keys.PAGE_DOWN);
+
+    @Given("Ilk yorumun icerigini al")
+    public void ilkYorumunIceriginiAl() {
+        hbElements.waitForPageLoad(3);
+        log.info("İlk yorum:\n-" + hbElements.firstCommentTextElement.getText());
+    }
+
+    @Given("Ilk yorum icin begen butonuna tikla")
+    public void ilkYorumIcinBegenButonunaTikla() {
+        hbElements.waitForPageLoad(5);
         hbElements.elementToClickable(hbElements.firstLikeButton);
     }
-    @Given("Kullanici {string} yazisini gorur")
-    public void kullanici__yazisini_gorur(String message) {
-        System.out.println(message);
+
+    @Given("Ekrandaki Tesekkur Ederiz yazisini dogrula")
+    public void ekrandakiYazisiniDogrula() {
+        //Burassı genel yazılar için olacaktı ancak UTF-8
+        // bariyerine takıldığım için önlem amaçlı sadece Teşekkür Ederiz yazısını eklettim
         hbElements.isDisplay(hbElements.tesekkurEderizTextElement);
     }
 

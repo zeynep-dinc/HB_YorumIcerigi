@@ -1,13 +1,20 @@
 Feature: Test 1
 
-
   Background: Ana step
     * Kullanicinin hepsiburada "ANASAYFA" oldugu teyit edilir
 
-
-  Scenario: step1
-    * Kullanici "samsung galaxy z flip 3" icin arama islemi yapar
-    * Kullanici arama sonucunda gelen urun listesinden urun secer ve urun detay sayfasina gider
-    * Kullanici secilen urun icin urun detayda "Yorumlar" tabina gider
-    * Kullanici gelen yorumlar icerisinde "ilk" yorumun "Evet" butonuna basar
-    * Kullanici "Teşekkür Ederiz" yazisini gorur
+    Scenario Template: "<urunAdi>" icin arama yap ve ilk yorumu begen
+      * Arama cubuguna "<urunAdi>" yaz ve yaziyi dogrula
+      * "ENTER" tusuna bas
+#      * Arama cubugunda "<urunAdi>" degerinin aratildigini dogrula
+      * Ilk urunun detayini ac
+      * Son tabi ac ilk tabi kapat
+      * Degerlendirme yazisina tikla
+      * "PAGE_DOWN" tusuna bas
+      * Ilk yorumun icerigini al
+      * Ilk yorum icin begen butonuna tikla
+      * Ekrandaki Tesekkur Ederiz yazisini dogrula
+      Examples:
+        | urunAdi |
+        | apple   |
+        | samsung |
